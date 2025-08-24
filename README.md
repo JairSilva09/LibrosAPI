@@ -44,16 +44,17 @@ Una API REST desarrollada con Node.js, Express, MongoDB y Mongoose para la gesti
 ```
 
 ## 📚 Estructura del Proyecto
-/
-├── controllers/     # Lógica de los controladores
-├── models/          # Modelos de Mongoose
-├── routes/          # Definición de rutas
-├── middleware/      # Middlewares personalizados
-├── database/        # Configuración de la base de datos
-|── services/        # Lógica de negocio y servicios
-|── helpers/         # Utilidades y funciones auxiliares
-└── index.js         # Aplicación principal
-
+```bash
+    /
+    ├── controllers/     # Lógica de los controladores
+    ├── models/          # Modelos de Mongoose
+    ├── routes/          # Definición de rutas
+    ├── middleware/      # Middlewares personalizados
+    ├── database/        # Configuración de la base de datos
+    |── services/        # Lógica de negocio y servicios
+    |── helpers/         # Utilidades y funciones auxiliares
+    └── index.js         # Aplicación principal
+```
 
 ## 🔁 Paginación y busqueda
 GET /books?page=2&limit=10&search=al
