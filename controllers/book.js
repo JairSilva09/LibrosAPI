@@ -1,7 +1,7 @@
-const Book = require('../models/Book');
-const {validarLibro,validarSearch} = require('../helpers/validar');
+import Book from '../models/Book.js';
+import { validarLibro, validarSearch } from '../helpers/validar.js';
 
-const test = (req,res)=>{
+export const test = (req,res)=>{
     return res.status(200).json(
         {
             mensaje: "Soy una respuesta desde el controlador Book"
@@ -9,7 +9,7 @@ const test = (req,res)=>{
     )
 }
 
-const create = async (req,res)=>{
+export const create = async (req,res)=>{
     let body = req.body;
     try {
         //validar
@@ -29,15 +29,14 @@ const create = async (req,res)=>{
     }
 }
 
-const getBooks = async (req,res)=>{
-
+export const getBooks = async (req,res)=>{    
     let limit = req.query.limit ?? '10';
     let page = req.query.page ?? '1';
     let search = req.query.search?validarSearch(req.query.search):null
-    let skip = (page - 1) * limit;
+    let skip = (page - 1) * limit;        
     const filter= {};
     limit = parseInt(limit);
-    page = parseInt(page);
+    page = parseInt(page);    
     if(search){
         filter.$or = [
                 { autor: { $regex: search,$options: 'i' } },
@@ -84,7 +83,7 @@ const getBooks = async (req,res)=>{
     }
 }
 
-const getOneBook = async (req,res)=>{
+export const getOneBook = async (req,res)=>{
     let idBook = req.params.idBook;
     try {
         let resp = await Book.findById(idBook).exec();
@@ -105,7 +104,7 @@ const getOneBook = async (req,res)=>{
     }
 }
 
-const updateBook = async(req,res)=>{
+export const updateBook = async(req,res)=>{
     let idBook = req.params.idBook; 
     let body = req.body;    
     try {
@@ -137,7 +136,7 @@ const updateBook = async(req,res)=>{
     }
 }
 
-const deleteBook = async (req,res) => {
+export const deleteBook = async (req,res) => {
     let idBook = req.params.idBook;    
     try {
         let book = await Book.findById(idBook) 
@@ -159,8 +158,7 @@ const deleteBook = async (req,res) => {
             )
         }
 
-        let resp = await Book.findByIdAndDelete(idBook).exec(); 
-                               
+        let resp = await Book.findByIdAndDelete(idBook).exec();                              
                                                 
         return res.status(200).json(
             {
@@ -176,13 +174,4 @@ const deleteBook = async (req,res) => {
             }
         )
     }
-}
-
-module.exports = {
-    test,
-    create,
-    deleteBook,
-    getBooks,
-    getOneBook,
-    updateBook    
 }

@@ -1,8 +1,9 @@
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const jwt = require('../services/jwt');
-const {validarUsuario,validarLogin} = require('../helpers/validar');
-const test = (req,res)=>{
+import User from '../models/User.js';
+import bcrypt from 'bcrypt';
+import {crearToken} from '../services/jwt.js';
+import  {validarUsuario,validarLogin} from '../helpers/validar.js';
+
+export const test = (req,res)=>{
     return res.status(200).json(
         {
             mensaje: "Soy una respuesta desde el controlador user"
@@ -10,7 +11,7 @@ const test = (req,res)=>{
     )
 }
 
-const create = async (req,res)=>{
+export const create = async (req,res)=>{
     let body = req.body;
     try {
         //validar
@@ -43,7 +44,7 @@ const create = async (req,res)=>{
     }
 }
 
-const getUsers = async (req,res)=>{
+export const getUsers = async (req,res)=>{
 
     let limit = req.query.limit ?? '10';
     let page = req.query.page ?? '1';
@@ -91,7 +92,7 @@ const getUsers = async (req,res)=>{
     }
 }
 
-const getOne = async (req,res) => {
+export const getOne = async (req,res) => {
     let id = req.params.id;
     try {
         let resp = await User.findById(id).exec();                                
@@ -111,7 +112,7 @@ const getOne = async (req,res) => {
     }
 }
 
-const deleteUser = async (req,res) => {    
+export const deleteUser = async (req,res) => {    
     let id = req.params.id;
      try {
         let query = await User.findOneAndDelete({_id:id})                                
@@ -133,7 +134,7 @@ const deleteUser = async (req,res) => {
     }
 }
 
-const login = async (req,res) =>{
+export const login = async (req,res) =>{
     let body = req.body;
     try {
         //validar
@@ -144,7 +145,7 @@ const login = async (req,res) =>{
         if(!result) return res.status(404).send({status: "error",mensaje: "El usuario no existe"});
         let pwd = await bcrypt.compare(body.password,result.password);        
         if(!pwd) return res.status(400).send({status: "error",mensaje: "Paswword erroneo"}); 
-        const token = jwt.creaeToken(result);
+        const token = crearToken(result);
         return res.status(200).json(
             {
                 status: "success",
@@ -164,13 +165,4 @@ const login = async (req,res) =>{
             }
         )
     }
-}
-
-module.exports = {
-    test,
-    create,
-    getUsers,
-    getOne,
-    deleteUser,
-    login
 }

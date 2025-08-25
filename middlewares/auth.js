@@ -1,11 +1,11 @@
 
-const {decodeToken} = require('../services/jwt');
-const dayjs = require("dayjs");
+import { decodeToken } from '../services/jwt.js';
+import dayjs from 'dayjs';
 const auth = (req,res,next) =>{
     if(!req.headers.authorization){
         return res.status(401).send({
             status: "error",
-            mensaje: "No tiene la autorizacion para realizar esta acción"
+            mensaje: "Debes estar autenticado"
         })
     }
 
@@ -19,7 +19,7 @@ const auth = (req,res,next) =>{
     const token = authHeader.substring(7).replace(/['"]+/g, '');
 
     try {
-        let {payload} = decodeToken(token);
+        let payload = decodeToken(token);
 
         if(payload.exp <= dayjs().unix()){
              return res.status(401).send({
@@ -38,4 +38,4 @@ const auth = (req,res,next) =>{
     }
 }
 
-module.exports = {auth};
+export default auth;
