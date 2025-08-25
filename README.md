@@ -9,6 +9,7 @@ Una API REST desarrollada con Node.js, Express, MongoDB y Mongoose para la gesti
 - Estructura modular: Controladores, modelos, rutas y middlewares
 - Base de datos MongoDB: Almacenamiento persistente con Mongoose ODM
 - Endpoints protegidos: Acceso restringido para operaciones sensibles
+- Documentación interactiva: Swagger UI para probar endpoints
 ---
 
 ## 🛠 Requisitos
@@ -42,6 +43,18 @@ Una API REST desarrollada con Node.js, Express, MongoDB y Mongoose para la gesti
 ```bash
     npm run dev
 ```
+## 📖 Documentación de la API
+La documentación interactiva de la API está disponible via Swagger UI:
+    📚 Swagger Documentation
+    Accede a la documentación interactiva en:
+    http://localhost:3000/api/docs
+
+    Desde Swagger UI puedes:
+
+    Ver todos los endpoints disponibles
+    Probar los endpoints directamente desde el navegador
+    Ver los modelos de datos y esquemas
+    Probar la autenticación JWT
 
 ## 📚 Estructura del Proyecto
 ```bash
